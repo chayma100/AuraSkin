@@ -1,289 +1,154 @@
-# 🔐 Full Stack Authentication App — React + Vite + Spring Boot
+# 🌿 AuraSkin — AI-Powered Cosmetic Ingredient Analyzer
 
-A complete **authentication system** built using **React (Vite)** on the frontend and **Spring Boot** on the backend.  
-Supports **JWT-based authentication** with **username/password login**, as well as **Google** and **GitHub OAuth2 login**.
+> Scan, analyze, and understand what you put on your skin.
 
----
-
-## 🧱 Tech Stack
-
-### 🖥️ Frontend
-
-- React (Vite)
-- Tailwind CSS
-- Axios
-- React Router DOM
-- ShadCN UI (optional)
-
-### ⚙️ Backend
-
-- Spring Boot 3.x
-- Spring Security 6.x
-- Spring Data JPA (MySQL)
-- OAuth2 Client (Google, GitHub)
-- JWT Authentication
-- Lombok + HikariCP
+AuraSkin is a full-stack mobile-first web application that combines **OCR**, **NLP**, and **Computer Vision** to help users make safer cosmetic choices. It analyzes product ingredients for toxicity, detects skin type from a selfie, and recommends safe products tailored to your profile.
 
 ---
 
-## Screenshots
+## ✨ Features
 
-### Home page
+| Feature | Description |
+|--------|-------------|
+| 📸 **Ingredient Scanner** | Scan a product label via camera — OCR extracts the INCI ingredient list automatically |
+| 🔍 **Barcode Scanner** | Scan a product barcode to retrieve its ingredients from a local database or Open Beauty Facts |
+| 🧪 **Toxicity Analysis** | Each ingredient is analyzed for Cancer, Allergy, Reproductive Toxicity, and Usage Restrictions |
+| 🤳 **Skin Type Detection** | Take a selfie — a fine-tuned ResNet50 predicts your skin type (Dry / Oily / Normal) |
+| 🌿 **Product Recommendation** | Get safe product recommendations matched to your skin type and product preference |
+| ❤️ **Favorites & History** | Save products and access your scan history |
+| 💬 **Community Discussions** | Share reviews and read experiences from other users |
 
-![Homepage](./screenshots/sc1.png)
+---
 
-### Login page
+## 🏗️ Architecture
 
-![Login Page](./screenshots/sc2.png)
+```
+┌─────────────────────────────────────────────┐
+│         Frontend — React + TypeScript        │
+│   (Vite · Tailwind · Framer Motion)         │
+└──────────────────┬──────────────────────────┘
+                   │ HTTP REST
+┌──────────────────▼──────────────────────────┐
+│         API Gateway — Node.js / Express      │
+│              proxy + auth + routes           │
+└──────────────────┬──────────────────────────┘
+                   │ HTTP
+┌──────────────────▼──────────────────────────┐
+│         AI Backend — FastAPI (Python)        │
+│  OCR (EasyOCR) · NER (SciBERT)             │
+│  NLP (TF-IDF + LR) · Vision (ResNet50)     │
+└──────────────────┬──────────────────────────┘
+                   │
+┌──────────────────▼──────────────────────────┐
+│              Data Layer                      │
+│  dataset_v2_clean.csv · cosmetics.csv       │
+│  mapping_combine_final.csv                  │
+└─────────────────────────────────────────────┘
+```
 
-### Login page with error
+---
 
-![Login Page](./screenshots/sc3.png)
+## 🤖 AI Models
 
-### Register page
+### Sprint 2 — Ingredient Toxicity Classifier
+- **Model** : TF-IDF + Logistic Regression + Optuna
+- **Task** : Multi-label binary classification (4 risk dimensions)
+- **F1-Macro** : 0.707 (after per-class threshold tuning)
+- **Classes** : Cancer · Allergies · Reproductive Toxicity · Usage Restrictions
 
-![Register Page](./screenshots/sc4.png)
+### Sprint 3 — Skin Type Classifier
+- **Model** : ResNet50 fine-tuned (Transfer Learning)
+- **Task** : Binary image classification (Dry / Oily)
+- **Accuracy** : 92.77% on test set
+- **XAI** : Grad-CAM · LIME · Occlusion Sensitivity
 
-### Dashboard
+> ⚠️ Model files (`.safetensors`, `.pth`) are not included in this repository due to size constraints.
+> Download them separately and place them in the `backend/` folder.
 
-![Dashboard](./screenshots/sc5.png)
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js >= 18
+- Python >= 3.10
+- pip
+
+### 1. Clone the repository
+```bash
+git clone https://github.com/your-username/AuraSkin.git
+cd AuraSkin
+```
+
+### 2. Start the AI Backend (FastAPI)
+```bash
+cd backend
+pip install -r requirements.txt
+uvicorn main:app --reload --host 0.0.0.0 --port 8001
+```
+
+### 3. Start the API Gateway (Node.js)
+```bash
+cd backend
+npm install
+node index.js
+# runs on http://localhost:3000
+```
+
+### 4. Start the Frontend (React)
+```bash
+cd auth-front
+npm install
+npm run dev
+# runs on http://localhost:5173
+```
+
+---
 
 ## 📁 Project Structure
 
 ```
-auth-app-boot-react/
-│
-├── backend/                  # Spring Boot Backend
+AuraSkin/
+├── auth-front/              # React + TypeScript frontend
 │   ├── src/
-│   ├── pom.xml
-│   └── application.yml
-│
-├── frontend/                 # React + Vite Frontend
-│   ├── src/
-│   ├── package.json
-│   └── vite.config.js
-│
+│   │   ├── components/      # UI components
+│   │   ├── pages/           # Route pages
+│   │   └── lib/             # Utilities (history, favorites)
+├── backend/                 # Node.js proxy + FastAPI
+│   ├── main.py              # FastAPI — OCR, NLP, Vision, Recommendation
+│   ├── index.ts             # Node.js — API Gateway
+│   ├── dataset_v2_clean.csv # Ingredient toxicity dataset
+│   ├── cosmetics.csv        # Product recommendation dataset
+│   └── mapping_combine_final.csv
 └── README.md
 ```
 
 ---
 
-## ⚙️ Backend Setup (Spring Boot)
+## 🛠️ Tech Stack
 
-### 🧩 Prerequisites
+**Frontend**
+- React 18 · TypeScript · Vite
+- Tailwind CSS · Framer Motion
+- Quagga2 (barcode scanning)
 
-- Java 17+
-- Maven 3.9+
-- MySQL (or compatible database)
-- Git
+**Backend — Node.js**
+- Express · Multer · node-fetch
 
-### 🧰 Steps to Run Backend
-
-1. Navigate to the backend folder:
-
-   ```bash
-   cd backend
-   ```
-
-2. Create a new database:
-
-   ```sql
-   CREATE DATABASE auth_app;
-   ```
-
-3. Configure `application.yml`:
-
-   ```yaml
-   server:
-     port: 8081
-
-   spring:
-     application:
-       name: auth-backend
-     datasource:
-       url: jdbc:mysql://localhost:3306/auth_app
-       username: root
-       password: root
-     jpa:
-       hibernate:
-         ddl-auto: update
-       show-sql: true
-       properties:
-         hibernate:
-           dialect: org.hibernate.dialect.MySQL8Dialect
-
-   security:
-     jwt:
-       secret: ${JWT_SECRET}
-       issuer: auth-backend
-       access-ttl-seconds: 900
-       refresh-ttl-seconds: 1209600
-       refresh-cookie-name: refresh_token
-       cookie-secure: false
-       cookie-same-site: Lax
-
-     oauth2:
-       client:
-         registration:
-           google:
-             client-id: ${GOOGLE_CLIENT_ID}
-             client-secret: ${GOOGLE_CLIENT_SECRET}
-             redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
-             scope: [email, profile]
-           github:
-             client-id: ${GITHUB_CLIENT_ID}
-             client-secret: ${GITHUB_CLIENT_SECRET}
-             redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
-             scope: [user:email, read:user]
-   ```
-
-4. Set environment variables:
-
-   ```bash
-   export JWT_SECRET="your-random-long-secret"
-   export GOOGLE_CLIENT_ID="your-google-client-id"
-   export GOOGLE_CLIENT_SECRET="your-google-client-secret"
-   export GITHUB_CLIENT_ID="your-github-client-id"
-   export GITHUB_CLIENT_SECRET="your-github-client-secret"
-   ```
-
-5. Run the Spring Boot app:
-   ```bash
-   mvn spring-boot:run
-   ```
-
-📍 Backend runs on **http://localhost:8081**
+**Backend — Python (FastAPI)**
+- EasyOCR · SciBERT (NER)
+- scikit-learn · Optuna (TF-IDF + LR)
+- PyTorch · torchvision (ResNet50)
+- RapidFuzz (fuzzy matching)
 
 ---
 
-## 💻 Frontend Setup (React + Vite)
+## 👥 Team
 
-### 🧩 Prerequisites
-
-- Node.js 18+
-- npm / yarn / pnpm
-
-### ⚙️ Steps to Run Frontend
-
-1. Navigate to frontend directory:
-
-   ```bash
-   cd frontend
-   ```
-
-2. Install dependencies:
-
-   ```bash
-   npm install
-   ```
-
-3. Create `.env` file inside `frontend/`:
-
-   ```bash
-   VITE_BACKEND_URL=http://localhost:8081
-   ```
-
-4. Start development server:
-   ```bash
-   npm run dev
-   ```
-
-📍 Frontend runs on **http://localhost:5173**
+Developed as a 2nd year Engineering project.
 
 ---
 
-## 🔗 Authentication Flow
+## 📄 License
 
-1. **User Login (Email/Password):**
-
-   - User logs in via frontend.
-   - Spring Boot backend verifies credentials.
-   - Returns JWT tokens (access + refresh).
-
-2. **OAuth Login (Google / GitHub):**
-
-   - Redirects to provider login page.
-   - On success, backend issues JWTs.
-   - React app stores tokens securely (cookie / memory).
-
-3. **Token Refresh:**
-
-   - When access token expires, refresh token is used silently to generate a new one.
-
-4. **Logout:**
-   - Cookies/tokens are cleared; session invalidated.
-
----
-
-## 🔑 Example API Endpoints
-
-| Method | Endpoint                       | Description                    |
-| ------ | ------------------------------ | ------------------------------ |
-| `POST` | `/api/auth/login`              | Login with username & password |
-| `POST` | `/api/auth/register`           | Register a new user            |
-| `GET`  | `/api/auth/me`                 | Get current logged-in user     |
-| `GET`  | `/oauth2/authorization/google` | Redirect to Google login       |
-| `GET`  | `/oauth2/authorization/github` | Redirect to GitHub login       |
-| `POST` | `/api/auth/refresh`            | Refresh access token           |
-| `POST` | `/api/auth/logout`             | Logout and clear tokens        |
-
----
-
-## 🧠 Environment Variables Summary
-
-| Variable               | Description              | Example                            |
-| ---------------------- | ------------------------ | ---------------------------------- |
-| `JWT_SECRET`           | Secret key for JWT       | `random-long-secret`               |
-| `GOOGLE_CLIENT_ID`     | Google OAuth client ID   | `xxxxx.apps.googleusercontent.com` |
-| `GOOGLE_CLIENT_SECRET` | Google OAuth secret      | `xxxxxx`                           |
-| `GITHUB_CLIENT_ID`     | GitHub OAuth client ID   | `ghp_xxxxx`                        |
-| `GITHUB_CLIENT_SECRET` | GitHub OAuth secret      | `ghs_xxxxx`                        |
-| `VITE_BACKEND_URL`     | Backend URL for frontend | `http://localhost:8081`            |
-
----
-
-## 🧰 Common Commands
-
-| Task            | Command                         |
-| --------------- | ------------------------------- |
-| Run backend     | `mvn spring-boot:run`           |
-| Run frontend    | `npm run dev`                   |
-| Build frontend  | `npm run build`                 |
-| Package backend | `mvn clean package`             |
-| Run backend JAR | `java -jar target/auth-app.jar` |
-
----
-
-## 🧩 Deployment Tips
-
-- Build frontend for production:
-  ```bash
-  npm run build
-  ```
-- Copy `dist/` files to `backend/src/main/resources/static` for single-server deployment.
-- For separate deployment:
-  - Host frontend on Netlify/Vercel.
-  - Host backend on Render/AWS/DigitalOcean.
-  - Update `VITE_BACKEND_URL` to production backend URL.
-- Use HTTPS and set cookies with `secure` and `SameSite=Lax`.
-
----
-
-## 🧑‍💻 Author
-
-**Learn Code With Durgesh**  
-Founder — Substring Technologies Pvt. Ltd.  
-📺 [YouTube: LearnCodeWithDurgesh](https://www.youtube.com/@LearnCodeWithDurgesh)  
-🌐 [Website: substring.tech](https://learncodewithdurgesh.com)  
-📬 [Telegram: @learncodewithdurgesh](https://t.me/learncodewithdurgesh)
-
----
-
-## 🪪 License
-
-This project is licensed under the **MIT License**.  
-You are free to use, modify, and distribute it for learning and educational purposes.
-
----
-
-⭐ **If this project helped you, consider giving it a star!**
+This project is for academic purposes only.
