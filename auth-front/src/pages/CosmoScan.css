@@ -1,0 +1,207 @@
+/* ============================================
+   CosmoScan — Thème AuraSkin
+   Rose / Violet / Glassmorphism
+   ============================================ */
+
+/* Fond de page */
+.cosmo-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #fce4ec 0%, #e8d5f5 40%, #d4b8f0 100%);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 40px 16px;
+  font-family: "Segoe UI", system-ui, sans-serif;
+}
+
+/* Carte principale — glassmorphism */
+.cosmo-container {
+  width: 100%;
+  max-width: 500px;
+  background: rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 28px;
+  padding: 32px 28px;
+  box-shadow: 0 20px 60px rgba(180, 80, 200, 0.2), 0 4px 20px rgba(236, 72, 153, 0.15);
+}
+
+/* Header */
+.cosmo-header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.cosmo-header h1 {
+  font-size: 2.2rem;
+  font-weight: 800;
+  background: linear-gradient(90deg, #ec4899, #a855f7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0 0 6px 0;
+  filter: drop-shadow(0 0 12px rgba(236, 72, 153, 0.5));
+}
+
+.cosmo-header p {
+  color: #9c6db0;
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+/* Sélecteur de mode */
+.cosmo-mode-selector {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin: 10px 0 20px 0;
+}
+
+/* Bouton principal (dégradé pink → purple) */
+.cosmo-mode-btn {
+  width: 100%;
+  background: linear-gradient(90deg, #ec4899, #a855f7) !important;
+  color: white !important;
+  border: none !important;
+  padding: 14px 24px !important;
+  border-radius: 50px !important;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(168, 85, 247, 0.35);
+  outline: none !important;
+  transition: opacity 0.2s, transform 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.cosmo-mode-btn:hover {
+  opacity: 0.92;
+  transform: translateY(-1px);
+}
+
+/* Wrapper caméra */
+.cosmo-camera-wrapper {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  background: #000;
+  aspect-ratio: 4/3;
+  box-shadow: 0 8px 30px rgba(168, 85, 247, 0.3);
+  border: 2px solid rgba(236, 72, 153, 0.3);
+}
+
+.cosmo-camera-wrapper video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.cosmo-camera-wrapper canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Bouton capture */
+.cosmo-capture-btn {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(90deg, #ec4899, #a855f7) !important;
+  color: white;
+  border: none;
+  padding: 12px 28px;
+  border-radius: 50px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  z-index: 10;
+  box-shadow: 0 4px 20px rgba(168, 85, 247, 0.5);
+  outline: none !important;
+  transition: opacity 0.2s;
+}
+
+.cosmo-capture-btn:hover {
+  opacity: 0.9;
+}
+
+/* Wrapper upload */
+.cosmo-upload-wrapper {
+  display: flex;
+  justify-content: center;
+  margin: 16px 0;
+}
+
+/* Bouton retour */
+.cosmo-reset-btn {
+  background: transparent !important;
+  border: none !important;
+  color: #a855f7 !important;
+  cursor: pointer;
+  font-size: 0.88rem;
+  margin: 10px 0 4px 0;
+  text-decoration: underline;
+  outline: none !important;
+  display: block;
+  padding: 0 !important;
+  box-shadow: none !important;
+  transition: color 0.2s;
+}
+
+.cosmo-reset-btn:hover {
+  color: #ec4899 !important;
+}
+
+/* Status */
+.cosmo-status {
+  text-align: center;
+  margin: 16px 0;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #7e3fa8;
+  min-height: 1.4em;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 12px;
+  padding: 10px 16px;
+  border: 1px solid rgba(168, 85, 247, 0.2);
+}
+
+/* Résultats */
+.cosmo-results-box {
+  margin-top: 16px;
+}
+
+.cosmo-results-box h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #7e3fa8;
+  margin-bottom: 10px;
+}
+
+.cosmo-ingredients-display {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+/* Badge ingrédient */
+.cosmo-ing-badge {
+  background: rgba(255, 255, 255, 0.6);
+  color: #6b21a8;
+  padding: 6px 14px;
+  border-radius: 50px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border: 1px solid rgba(168, 85, 247, 0.3);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 2px 8px rgba(168, 85, 247, 0.1);
+}

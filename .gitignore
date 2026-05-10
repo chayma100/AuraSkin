@@ -1,0 +1,23 @@
+# Modèles lourds
+*.safetensors
+*.pth
+*.pkl
+*.bin
+*.h5
+
+# Dossiers modèles entiers
+backend/modele_ner_scibert/
+backend/modele_cosmetiques/
+backend/modele_cosmetiques 2/
+
+# Dépendances
+node_modules/
+venv/
+__pycache__/
+
+# Environnement
+.env
+
+# Build
+dist/
+build/

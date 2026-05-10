@@ -1,0 +1,13 @@
+fastapi
+uvicorn
+psycopg2-binary
+python-dotenv
+twilio
+torch
+torchvision
+transformers
+easyocr
+opencv-python
+pandas
+rapidfuzz
+Pillow
