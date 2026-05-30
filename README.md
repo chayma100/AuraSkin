@@ -2,7 +2,7 @@
 
 > Scan, analyze, and understand what you put on your skin.
 
-AuraSkin is a full-stack web application that combines **OCR**, **NLP**, and **Computer Vision** to help users make safer cosmetic choices. It analyzes product ingredients for toxicity, detects skin type from a selfie, and recommends safe products tailored to your profile.
+AuraSkin is a full-stack web application that combines **OCR**, **NLP**, and **Computer Vision** to help users make safer cosmetic choices. It analyzes product ingredients for toxicity, detects skin type from a photo, and recommends safe products tailored to your profile.
 
 ---
 
@@ -137,7 +137,6 @@ AuraSkin/
 - Tesseract OCR · SciBERT (NER)
 - scikit-learn · Optuna (TF-IDF + LR)
 - PyTorch · torchvision (ResNet50)
-- RapidFuzz (fuzzy matching)
 
 **Database**
 - Supabase (PostgreSQL)
