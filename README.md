@@ -77,7 +77,7 @@ AuraSkin is a full-stack web application that combines **OCR**, **NLP**, and **C
 
 ### 1. Clone the repository
 ```bash
-git clone https://github.com/your-username/AuraSkin.git
+git clone https://github.com/chayma100/AuraSkin.git
 cd AuraSkin
 ```
 
